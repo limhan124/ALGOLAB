@@ -1,0 +1,40 @@
+#include<CGAL/Exact_predicates_inexact_constructions_kernel.h>
+typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
+typedef K::Point_2 P;
+typedef K::Segment_2 S;
+typedef K::Ray_2 R;
+void test(int segs){
+  bool hit=false;
+  long x,y,a,b;
+  std::cin>>x>>y>>a>>b;
+  P standP(x,y),casualP(a,b);
+  R ray(standP,casualP);
+  for(int i=0;i<segs;i++){
+    long r,s,t,u;
+    std::cin>>r>>s>>t>>u;
+    P end_1(r,s),end_2(t,u);
+    if(!hit){
+      if(CGAL::do_intersect(ray,S(end_1,end_2))){
+        hit=true;
+      }
+    }
+  }
+  if(hit){
+    std::cout<<"yes"<<std::endl;
+  }else{
+    std::cout<<"no"<<std::endl;
+  }
+}
+
+int main(){
+  //cin，cout速度慢，是因为先把要输出的东西存入缓冲区，再输出，导致效率降低
+  //而这段ios_base::sync_with_stdio(false)可以来打消iostream的输入输出缓存，可以节省许多时间
+  std::ios_base::sync_with_stdio(false);
+  int segs;
+  std::cin>>segs;
+  while(segs){
+    test(segs);
+    std::cin>>segs;
+  }
+  return 0;
+}
